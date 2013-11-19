@@ -31,6 +31,16 @@ class windows_java (
   $file_path = false,
 ) inherits windows_java::params {
 
+  if $chocolatey {
+    Package { provider => chocolatey }
+  } else {
+
+  Package { 
+    source          => $java_installer_path,
+    install_options => ['/s', '/v/qn','ADDLOCAL=jrecore REBOOT=Suppress JAVAUPDATE=0'],
+    provider => windows,
+  }
+
   if $file_path {
     $java_installer_path = $file_path
   } else {
@@ -43,9 +53,6 @@ class windows_java (
   }
   package { $package:
     ensure          => installed,
-    source          => $java_installer_path,
-    install_options => ['/s', '/v/qn','ADDLOCAL=jrecore REBOOT=Suppress JAVAUPDATE=0'],
-
   }
 
   if $::architecture == 'x64' {
