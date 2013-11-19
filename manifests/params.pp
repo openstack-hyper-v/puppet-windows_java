@@ -1,6 +1,6 @@
 class windows_java::params {
-  $url     = $java_url
-  $chocolatey = 'True',
+  $url        = $java_url
+  $chocolatey = 'True'
 
 
   $package  = $chocolatey ?{
