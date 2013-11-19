@@ -51,6 +51,7 @@ class windows_java (
       before      => Package[$package],
     }
   }
+}
   package { $package:
     ensure          => installed,
   }
