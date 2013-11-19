@@ -1,11 +1,11 @@
 class windows_java::params {
   $url        = $java_url
-  $chocolatey = 'True'
+  $chocolatey = 'true'
 
 
   $package  = $chocolatey ?{
-    'true'  => $chocolatey_package
-    default => $java_package
+    /(true)/  => $chocolatey_package,
+    default   => $java_package,
   }
 
   $java_url = $::architecture ? {
