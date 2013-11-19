@@ -28,36 +28,36 @@
 class windows_java (
   $url       = $::windows_java::params::url,
   $package   = $::windows_java::params::package,
-  $file_path = false,
+  $file_path = false
 ) inherits windows_java::params {
 
   if $chocolatey {
     Package { provider => chocolatey }
   } else {
 
-  Package { 
-    source          => $java_installer_path,
-    install_options => ['/s', '/v/qn','ADDLOCAL=jrecore REBOOT=Suppress JAVAUPDATE=0'],
-    provider => windows,
-  }
+    Package { 
+      source          => $java_installer_path,
+      install_options => ['/s', '/v/qn','ADDLOCAL=jrecore REBOOT=Suppress JAVAUPDATE=0'],
+      provider => windows,
+    }
 
-  if $file_path {
-    $java_installer_path = $file_path
-  } else {
-    $java_installer_path = "${::temp}\\${package}.exe"
-    windows_common::remote_file{'Java':
-      source      => $url,
-      destination => $java_installer_path,
-      before      => Package[$package],
+    if $file_path {
+      $java_installer_path = $file_path
+    } else {
+      $java_installer_path = "${::temp}\\${package}.exe"
+      windows_common::remote_file{'Java':
+        source      => $url,
+        destination => $java_installer_path,
+        before      => Package[$package],
+      }
     }
   }
-}
   package { $package:
     ensure          => installed,
   }
 
   if $::architecture == 'x64' {
-    $java_path = 'C:\Program Files (x86)\Java\jre7\'
+    $java_path = 'C:\Program Files (x86)\Java\jre7\bin'
   } else {
     $java_path = 'C:\Program Files\Java\jre7\bin'
   }
