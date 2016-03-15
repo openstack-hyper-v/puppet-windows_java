@@ -31,11 +31,11 @@ class windows_java (
   $file_path = false
 ) inherits windows_java::params {
 
-  if $chocolatey {
+  if $::chocolatey {
     Package { provider => chocolatey }
   } else {
 
-    Package { 
+    Package {
       source          => $java_installer_path,
       install_options => ['/s', '/v/qn','ADDLOCAL=jrecore REBOOT=Suppress JAVAUPDATE=0'],
       provider => windows,
@@ -61,7 +61,6 @@ class windows_java (
   } else {
     $java_path = 'C:\Program Files\Java\jre7\bin'
   }
- 
   windows_path { $java_path:
     ensure  => present,
     require => Package[$package],

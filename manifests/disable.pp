@@ -10,7 +10,7 @@ class windows_java::disable (
     ensure  => absent,
   }
 
-  windows_path { $java_path:
+  windows_path { $::java_path:
     ensure  => absent,
   }
 

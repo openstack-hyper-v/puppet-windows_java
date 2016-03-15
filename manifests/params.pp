@@ -1,6 +1,7 @@
+# == Class: windows_java::params
 class windows_java::params (
   $url        = undef,
-  $chocolatey = 'true'
+  $chocolatey = true
 ){
 
   $java_url = $::architecture ? {
